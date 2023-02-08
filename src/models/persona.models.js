@@ -1,16 +1,26 @@
-const connection = require("../../conection")
+const {pool} = require("../../conection.js")
 
 model = {}
 
-model.list =  ()=> {
+model.list =   async ()=> {
     let sql = `SELECT * FROM persona`
-   connection.query(sql,(error, result )=>{
-      if(error) throw error;
-      
-      return result  
-   })
    
-    
+   let data = await pool.query(sql)
+   console.log(data)
+    return data
+}
+model.create = async() => {
+    let {idPersona, 
+        dniPersona, 
+        nombresPersona, 
+        apellidosPersona, 
+        edadPersona, 
+        sexoPersona,
+        celularPersona,
+        correoPersona
+    } = req.body
+    pool.query('INSERT INTO persona VALUES (?,?,?,?,?,?,?,?)',[idPersona, dniPersona, nombresPersona, apellidosPersona, edadPersona, sexoPersona, celularPersona, correoPersona])
+
 }
 
 module.exports = model;
