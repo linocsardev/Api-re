@@ -2,13 +2,14 @@ const personaMdl = require("../models/persona.models")
 
 model = {}
 
-model.list =   (req, res)=>{
+model.list =   async (req, res)=>{
     try {
-      
-      let data = personaMdl.list()
+
+      let result =await personaMdl.list()
+      console.log(result)
       res.json({
         state: "success",
-        result: data
+        data: result
       })
 
     } catch (error) {
@@ -17,16 +18,21 @@ model.list =   (req, res)=>{
             msg: "Ocurrio un error",
             error: error
         })
-        console.log(error)
     }
 }
-model.create = (req, res)=>{
+model.create = async (req, res)=>{
     try {
-    
-        console.log(data)
-        res.send("SE creó un anueva persona")
+        
+        let params = req.body
+        let result = await personaMdl.create(params)
+ 
+
+        res.json({
+            msg: "SE creó un anueva persona",
+            data:result
+        })
     } catch (error) {
-        console.log("HUBO UN ERROR :(")
+        console.log("HUBO UN ERROR :(", error)
     }
 }
 module.exports = model;
